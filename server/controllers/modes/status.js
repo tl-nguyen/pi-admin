@@ -118,12 +118,12 @@ exports.init = function (socket) {
         emitStorageInfo();
 
         // Setting emit intervals for different data
-        setInterval(emitTemperature, 10000);
-        setInterval(emitCPUUsage, 5000);
-        setInterval(emitMemoryUsage, 5000);
+        setInterval(emitTemperature, 15000);
+        setInterval(emitCPUUsage, 10000);
+        setInterval(emitMemoryUsage, 10000);
         setInterval(emitTime, 1000);
-        setInterval(emitTopList, 5000);
-        setInterval(emitStorageInfo, 60000);
+        setInterval(emitTopList, 10000);
+        //setInterval(emitStorageInfo, 60000);
     }
 
     // Starting point ;-)
