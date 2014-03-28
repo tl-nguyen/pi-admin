@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RaspberryPI - Admin Panel</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <style>
+        .gauges {
+            width: 200px;
+            height: 160px;
+        }
+        section,
+        #status,
+        #basic,
+        #god,
+        .warns {
+            margin-top: 25px;
+        }
+        button {
+            margin-top: 2px;
+        }
+        .alert,
+        #basic-mode-header,
+        #god-mode-header {
+            display: none;
+        }
+        table {
+            border: 1px solid black;
+        }
+        th,
+        td {
+            padding: 2px 10px;
+        }
+        #top-list,
+        #storage-info {
+            margin: 20px auto;
+        }
+        caption {
+            padding: 5px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #575757;
+        }
+        .panel {
+            margin: 10px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h1>
+                <span id="hostname"></span>
+                <small id="timeData"></small>
+            </h1>
+            <h5>Read
+                <a href="#">Project Tutorial</a>&nbsp;for more information</h5>
+        </header>
+
+        <nav>
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#status" data-toggle="tab" class="show-common-data">
+                        <span class="glyphicon glyphicon-stats"></span>
+                        Status</a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-wrench"></span>
+                        Control
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="">
+                            <a href="#basic" tabindex="-1" data-toggle="tab" class="show-common-data">Basic Mode</a>
+                        </li>
+                        <li class="">
+                            <a href="#god" tabindex="-1" data-toggle="tab" class="hide-common-data">God Mode</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="tab-content">
+
+            <!-- Status tab BEGIN -->
+            <section class="tab-pane fade in active" id="status">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="gauges" id="currentTemp"></div>
+                        <p class="text-justify">
+                            <strong>Min Temperature :</strong>
+                            <span id="minTemp"></span>
+                        </p>
+                        <p class="text-justify">
+                            <strong>Max Temperature :</strong>
+                            <span id="maxTemp"></span>
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="gauges" id="cpuUsage"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="gauges" id="memoryUsage"></div>
+                        <p class="text-justify">
+                            <strong>Total Memory :</strong>
+                            <span id="memTotal"></span>
+                        </p>
+                        <p class="text-justify">
+                            <strong>Used Memory :</strong>
+                            <span id="memUsed"></span>
+                        </p>
+                        <p class="text-justify">
+                            <strong>Free Memory :</strong>
+                            <span id="memFree"></span>
+                        </p>
+                    </div>
+                </div>
+
+                <hr />
+            </section>
+            <!-- Status tab END -->
+
+            <!-- Basic Mode tab BEGIN -->
+            <section class="tab-pane" id="basic">
+                <h2>
+                    Basic Mode
+                </h2>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <button class="btn btn-danger" title="Reboot the server" id="reboot">
+                            Reboot
+                        </button>
+                    </div>
+                    <div class="col-sm-1">
+                        <button class="btn btn-danger" id="shutdown" title="Shut the server down">
+                            Shutdown
+                        </button>
+                    </div>
+                </div>
+
+                <div class="warns">
+                    <div class="alert alert-warning alert-reboot">Rebooting....z..z....z</div>
+                    <div class="alert alert-warning alert-shutdown">The server is shutting down... prepare for the impact!!!</div>
+                </div>
+
+                <hr />
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>Process Name</legend>
+                            <input type="text" id="kill-field" placeholder="Example: init" value="" />
+                            <button class="btn btn-warning" id="kill-button">Kill It</button>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>Path</legend>
+                            <input type="text" id="peek-field" placeholder="Example: /home/pi" value="" />
+                            <button class="btn btn-info" id="peek-button" data-toggle="modal" data-target="#peek-result">Peek</button>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <!-- Peek Result Modal -->
+                <div id="peek-result" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Result</h4>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+            </section>
+            <!-- Basic Mode tab END
+                
+                <!-- God Mode tab BEGIN -->
+            <section class="tab-pane" id="god">
+                <h2>
+                    God Mode
+                </h2>
+
+                <fieldset>
+                    <legend>Command Input</legend>
+                    <input type="text" id="command-line" placeholder="Example: sudo reboot" value="" />
+                    <button class="btn btn-primary" id="run-command">Run</button>
+                </fieldset>
+
+                <div id="command-result" class="panel panel-default">
+                    <div class="panel-heading">Output</div>
+                    <div class="panel-body">
+                        ....
+                    </div>
+                </div>
+
+            </section>
+            <!-- God Mode tab END -->
+
+            <!-- Common data for all tabs BEGIN -->
+            <div class="row common-data">
+                <!-- TOP List-->
+                <div class="col-md-6 table-responsive">
+                    <table id="top-list" class="table table-striped table-hover table-condensed">
+                        <caption>Top List</caption>
+                        <thead>
+                            <tr>
+                                <th>PID</th>
+                                <th>CPU</th>
+                                <th>Memory</th>
+                                <th>Command</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Storage Info -->
+                <div class="col-md-6 table-responsive">
+                    <table id="storage-info" class="table table-striped table-hover table-condensed">
+                        <caption>Storage</caption>
+                        <thead>
+                            <tr>
+                                <th>File System</th>
+                                <th>Size</th>
+                                <th>Used</th>
+                                <th>Available</th>
+                                <th>Use (%)</th>
+                                <th>Mounted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Common data for all tabs END -->
+
+        </div>
+
+        <hr />
+
+        <footer>
+            <p>&copy;
+                <span id="recent-year"></span>&nbsp;All rights reserved - Developed by
+                <a href="http://tlnguyen.com">TL Nguyen</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="js/lib/justgage.1.0.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
