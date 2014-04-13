@@ -1,65 +1,13 @@
-<!DOCTYPE html>
-<html>
+{% extends 'layout.html' %}
 
-<head>
-    <title>RaspberryPI - Admin Panel</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <style>
-        .gauges {
-            width: 200px;
-            height: 160px;
-        }
-        section,
-        #status,
-        #basic,
-        #god,
-        .warns {
-            margin-top: 25px;
-        }
-        button {
-            margin-top: 2px;
-        }
-        .alert,
-        #basic-mode-header,
-        #god-mode-header {
-            display: none;
-        }
-        table {
-            border: 1px solid black;
-        }
-        th,
-        td {
-            padding: 2px 10px;
-        }
-        #top-list,
-        #storage-info {
-            margin: 20px auto;
-        }
-        caption {
-            padding: 5px 0;
-            font-size: 16px;
-            font-weight: bold;
-            color: #575757;
-        }
-        .panel {
-            margin: 10px;
-            min-height: 50px;
-        }
-    </style>
-</head>
-
-<body>
+{% block content %}
     <div class="container">
         <header class="page-header">
             <h1>
                 <span id="hostname"></span>
                 <small id="timeData"></small>
             </h1>
-            <h5>Read
+            <h5>{{mongoMessage}} Read
                 <a href="http://tlnguyen.com/raspberry-pi-admin-panel">Project Tutorial</a>&nbsp;for more information</h5>
         </header>
 
@@ -258,25 +206,14 @@
             </div>
 
             <!-- Common data for all tabs END -->
-
         </div>
-
-        <hr />
-
-        <footer>
-            <p>&copy;
-                <span id="recent-year"></span>&nbsp;All rights reserved - Developed by
-                <a href="http://tlnguyen.com">TL Nguyen</a>
-            </p>
-        </footer>
     </div>
+{% endblock %}
 
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+{% block scripts %}
+    {% parent %}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="js/lib/justgage.1.0.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/main.js"></script>
-</body>
-
-</html>
+{% endblock %}

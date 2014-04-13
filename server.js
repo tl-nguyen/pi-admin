@@ -1,33 +1,25 @@
-/**
- * Module dependencies.
- */
-
-var express = require('express');
-var http = require('http');
-var path = require('path');
+var express = require('express'),
+    http = require('http');
 
 // controller
-var controller = require("./server/controllers/index.js");
+var controller = require("./server/controllers/modes/index.js");
 
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+var config = require('./server/config/config') [env];
 
-// development only
-if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
-}
+require('./server/config/express')(app, config);
 
-app.get('/', function (req, res) {
-    res.sendfile(__dirname + '/server/views/index.html');
-});
+require('./server/config/mongoose')(config);
 
+require('./server/config/passport')();
+
+require('./server/config/routes')(app);
 
 io.sockets.on('connection', controller.dataHandle);
 
-server.listen(app.get('port'));
+server.listen(config.port);
+console.log('Listening on port ' + config.port);
