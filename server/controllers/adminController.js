@@ -22,16 +22,17 @@ exports.signUp = function (req, res, next) {
 };
 
 exports.authenticate = function(req, res, next) {
-
     var auth = passport.authenticate('local', function (err, user) {
+        if(err) {
+            return next(err);
+        }
 
-        if(err) {return next(err);}
-
-        if(!user) {res.send({success: false})}
+        if(!user) {
+            res.send('Wrong password or username');
+        }
 
         req.logIn(user, function(err) {
             if(err) {return next(err);}
-//            res.send({success: true, user: user});
             res.redirect('/');
         });
     });
