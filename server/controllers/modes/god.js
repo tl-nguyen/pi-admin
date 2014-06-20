@@ -17,11 +17,9 @@ exports.init = function (socket) {
         });
     };
 
-    var initialize = function () {
+    (function () {
         //Receive requests from the web
         receiveCommand();
-    };
+    }());
 
-    // Starting point ;-)
-    initialize();
 };

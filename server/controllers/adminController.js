@@ -13,7 +13,7 @@ exports.signUp = function (req, res, next) {
             admin.hashed_pwd = admin.hashPwd(admin.salt, req.body.password);
             admin.save();
 
-            req.logIn(admin, function(err) {
+            req.logIn(admin, function (err) {
                 if(err) {return next(err);}
             });
         }
@@ -21,7 +21,7 @@ exports.signUp = function (req, res, next) {
     });
 };
 
-exports.authenticate = function(req, res, next) {
+exports.authenticate = function (req, res, next) {
     var auth = passport.authenticate('local', function (err, user) {
         if(err) {
             return next(err);
@@ -31,7 +31,7 @@ exports.authenticate = function(req, res, next) {
             res.send('Wrong password or username');
         }
 
-        req.logIn(user, function(err) {
+        req.logIn(user, function (err) {
             if(err) {return next(err);}
             res.redirect('/');
         });

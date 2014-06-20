@@ -7,8 +7,15 @@
                 <span id="hostname"></span>
                 <small id="timeData"></small>
             </h1>
-            <h5>{{mongoMessage}} Read
-                <a href="http://tlnguyen.com/raspberry-pi-admin-panel">Project Tutorial</a>&nbsp;for more information</h5>
+            <div class="row">
+                <div class="col-sm-10">
+                    <h5>{{mongoMessage}} Read
+                        <a href="http://tlnguyen.com/raspberry-pi-admin-panel">Project Tutorial</a>&nbsp;for more information</h5>
+                </div>
+                <div class="col-sm-2">
+                    <a href="#" id="logout">Logout</a>
+                </div>
+            </div>
         </header>
 
         <nav>
@@ -108,14 +115,14 @@
                     <div class="col-md-6">
                         <fieldset>
                             <legend>Process Name</legend>
-                            <input type="text" id="kill-field" placeholder="Example: init" value="" />
+                            <input type="text" id="kill-field" placeholder="Example: init" value="" class="form-control"/>
                             <button class="btn btn-warning" id="kill-button">Kill It</button>
                         </fieldset>
                     </div>
                     <div class="col-md-6">
                         <fieldset>
                             <legend>Path</legend>
-                            <input type="text" id="peek-field" placeholder="Example: /home/pi" value="" />
+                            <input type="text" id="peek-field" placeholder="Example: /home/pi" value="" class="form-control"/>
                             <button class="btn btn-info" id="peek-button" data-toggle="modal" data-target="#peek-result">Peek</button>
                         </fieldset>
                     </div>
@@ -151,7 +158,7 @@
 
                 <fieldset>
                     <legend>Command Input</legend>
-                    <input type="text" id="command-line" placeholder="Example: sudo reboot" value="" />
+                    <input type="text" id="command-line" placeholder="Example: sudo reboot" value="" class="form-control"/>
                     <button class="btn btn-primary" id="run-command">Run</button>
                 </fieldset>
 

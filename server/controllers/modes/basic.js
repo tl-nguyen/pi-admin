@@ -49,15 +49,12 @@ exports.init = function (socket) {
         });
     };
 
-    var initialize = function () {
+    (function () {
         //Receive requests from the web
         receiveReboot();
         receiveShutdown();
         receiveKillProccess();
         receivePathToPeek();
-    };
-
-    // Starting point ;-)
-    initialize();
+    }());
 
 }

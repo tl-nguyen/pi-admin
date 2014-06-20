@@ -105,9 +105,9 @@ exports.init = function (socket) {
                 socket.emit('storageInfo', stdout);
             }
         });
-    }
+    };
 
-    var initialize = function () {
+    (function () {
         //Emit data to the web
         emitHostName();
         emitTemperature();
@@ -124,9 +124,6 @@ exports.init = function (socket) {
         setInterval(emitTime, 1000);
         setInterval(emitTopList, 10000);
         //setInterval(emitStorageInfo, 60000);
-    }
-
-    // Starting point ;-)
-    initialize();
+    }());
 
 };
