@@ -1,0 +1,24 @@
+{
+  "name": "PI-Admin",
+  "version": "0.0.0",
+  "homepage": "https://github.com/tlnguyen-com/pi-admin",
+  "authors": [
+    "TL Nguyen <tl.nguyen.1987@gmail.com>"
+  ],
+  "description": "Admin Panel for Raspberry PI",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "raphael": "~2.1.2",
+    "justgage-official": "*",
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.1.1"
+  }
+}
