@@ -1,4 +1,4 @@
-pi-admin
+PI ADMIN
 ========
 
 Admin panel on the web for Raspberry Pi
@@ -6,7 +6,7 @@ Admin panel on the web for Raspberry Pi
 ##Requirements##
 
 - Having **NODE** & **NPM** installed
-- Having **BOWER** installed (You can use `sudo npm install -g bower` to install bower)
+- Having **BOWER** installed *(You can run `sudo npm install -g bower` to install bower)*
 
 ##Installation##
 
@@ -17,4 +17,4 @@ Admin panel on the web for Raspberry Pi
 - You will find those lines at *config.js* file `db: 'mongodb://your-database-address'`, enter modify it to your database address
 - To run PI-Admin, enter `node server.js` in the console
 
-Please visit <a href="http://tlnguyen.com/raspberry-pi-admin-panel">Project Tutorial</a> for more details
+*Please visit <a href="http://tlnguyen.com/raspberry-pi-admin-panel">Project Tutorial</a> for more details*
