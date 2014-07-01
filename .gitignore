@@ -8,3 +8,4 @@ public/lib
 test/coverage
 mean.iml
 server/config/config.js
+public/bower_components/
