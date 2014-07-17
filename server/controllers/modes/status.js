@@ -1,3 +1,5 @@
+'use strict';
+
 var exec = require('child_process').exec;
 
 exports.init = function (socket) {
@@ -9,7 +11,7 @@ exports.init = function (socket) {
 
     // Emit Hostname
     var emitHostName = function () {
-        exec("hostname", function (err, stdout, stderr) {
+        exec("hostname", function (err, stdout) {
             if (err != null) {
                 console.log('exec error: ' + err);
             } else {
@@ -20,7 +22,7 @@ exports.init = function (socket) {
 
     // Emit Temperature
     var emitTemperature = function () {
-        exec("cat /sys/class/thermal/thermal_zone0/temp", function (err, stdout, stderr) {
+        exec("cat /sys/class/thermal/thermal_zone0/temp", function (err, stdout) {
             if (err != null) {
                 console.log('exec error: ' + err);
             } else {
@@ -36,7 +38,7 @@ exports.init = function (socket) {
 
     // Emit CPU Usage
     var emitCPUUsage = function () {
-        exec("top -d 0.5 -b -n2 | grep 'Cpu(s)'|tail -n 1 | awk '{print $2 + $4}'", function (err, stdout, stderr) {
+        exec("top -d 0.5 -b -n2 | grep 'Cpu(s)'|tail -n 1 | awk '{print $2 + $4}'", function (err, stdout) {
             if (err !== null) {
                 console.log('exec error: ' + err);
             } else {
@@ -47,12 +49,12 @@ exports.init = function (socket) {
 
     // Emit Memory Usage
     var emitMemoryUsage = function () {
-        exec("grep 'MemFree' /proc/meminfo | grep -E '[0-9.]{4,}' -o", function (err, memFree, stderr) {
+        exec("grep 'MemFree' /proc/meminfo | grep -E '[0-9.]{4,}' -o", function (err, memFree) {
             if (err != null) {
                 console.log('exec error: ' + err);
             } else {
                 var memUsed = memTotal - memFree;
-                var memUsedToPercent = memUsedToPercent = Math.round(memUsed * 100 / memTotal);
+                var memUsedToPercent = Math.round(memUsed * 100 / memTotal);
                 socket.emit('memoryUsage', memUsedToPercent, (memUsed / 1024).toPrecision(6), (memFree / 1024).toPrecision(6));
             }
         });
@@ -60,7 +62,7 @@ exports.init = function (socket) {
 
     // Emit Memory Total
     var emitMemoryTotal = function () {
-        exec("grep 'MemTotal' /proc/meminfo | grep -E '[0-9.]{4,}' -o", function (err, stdout, stderr) {
+        exec("grep 'MemTotal' /proc/meminfo | grep -E '[0-9.]{4,}' -o", function (err, stdout) {
             if (err != null) {
                 console.log('exec error: ' + err);
             } else {
@@ -75,30 +77,30 @@ exports.init = function (socket) {
 
     // Emit Local time and Up time
     var emitTime = function () {
-        exec("uptime | tail -n 1 | awk '{print $1 \" \" $2 \" \" $3 \" \" $4}'", function (err, stdout, stderr) {
+        exec("uptime | tail -n 1 | awk '{print $1 \" \" $2 \" \" $3 \" \" $4}'", function (err, stdout) {
             if (err != null) {
                 console.log('exec error: ' + err);
             } else {
                 socket.emit('timeData', (stdout.split(","))[0]);
             }
         });
-    }
+    };
 
     // Emit Top List
     var emitTopList = function () {
         exec(" top -d 0.1 -b -n 2 | head -23 | awk '{print $1 \" \" $9 \"% \" $10 \"% \" $12 \" ;\"}'",
-            function (err, stdout, stderr) {
+            function (err, stdout) {
                 if (err != null) {
                     console.log('exec error: ' + err);
                 } else {
                     socket.emit('topList', stdout);
                 }
             });
-    }
+    };
 
     // Emit Storage info
     var emitStorageInfo = function () {
-        exec("df -h | awk '{print $1 \" \" $2 \" \" $3 \" \" $4 \" \" $5 \" \" $6 \";\"}'", function (err, stdout, stderr) {
+        exec("df -h | awk '{print $1 \" \" $2 \" \" $3 \" \" $4 \" \" $5 \" \" $6 \";\"}'", function (err, stdout) {
             if (err != null) {
                 console.log('exec error: ' + err);
             } else {
@@ -107,23 +109,15 @@ exports.init = function (socket) {
         });
     };
 
-    (function () {
-        //Emit data to the web
-        emitHostName();
-        emitTemperature();
-        emitCPUUsage();
-        emitMemoryTotal();
-        emitTime();
-        emitTopList();
-        emitStorageInfo();
-
-        // Setting emit intervals for different data
-        setInterval(emitTemperature, 15000);
-        setInterval(emitCPUUsage, 10000);
-        setInterval(emitMemoryUsage, 10000);
-        setInterval(emitTime, 1000);
-        setInterval(emitTopList, 10000);
-        //setInterval(emitStorageInfo, 60000);
-    }());
+    return {
+        emitHostName: emitHostName,
+        emitTemperature: emitTemperature,
+        emitCPUUsage: emitCPUUsage,
+        emitMemoryUsage: emitMemoryUsage,
+        emitMemoryTotal: emitMemoryTotal,
+        emitTime: emitTime,
+        emitTopList: emitTopList,
+        emitStorageInfo: emitStorageInfo
+    };
 
 };

@@ -1,3 +1,5 @@
+'use strict';
+
 var exec = require('child_process').exec;
 
 exports.init = function (socket) {
@@ -5,7 +7,7 @@ exports.init = function (socket) {
     // Receive Reboot request
     var receiveReboot = function () {
         socket.on('reboot', function () {
-            exec("sudo reboot", function (err, stdout, stderr) {
+            exec("sudo reboot", function (err) {
                 if (err !== null) {
                     console.log('exec error: ' + err);
                 }
@@ -16,7 +18,7 @@ exports.init = function (socket) {
     // Receive Shutdown request
     var receiveShutdown = function () {
         socket.on('shutdown', function () {
-            exec("sudo shutdown -h", function (err, stdout, stderr) {
+            exec("sudo shutdown -h", function (err) {
                 if (err !== null) {
                     console.log('exec error: ' + err);
                 }
@@ -25,9 +27,9 @@ exports.init = function (socket) {
     };
 
     // Receive Process Name to Kill
-    var receiveKillProccess = function () {
+    var receiveKillProcess = function () {
         socket.on('kill', function (procName) {
-            exec("sudo pkill " + procName, function (err, stdout, stderr) {
+            exec("sudo pkill " + procName, function (err) {
                 if (err !== null) {
                     console.log('exec error: ' + err);
                 }
@@ -49,12 +51,12 @@ exports.init = function (socket) {
         });
     };
 
-    (function () {
-        //Receive requests from the web
-        receiveReboot();
-        receiveShutdown();
-        receiveKillProccess();
-        receivePathToPeek();
-    }());
+    return {
+        receiveReboot: receiveReboot,
+        receiveShutdown: receiveShutdown,
+        receiveKillProcess: receiveKillProcess,
+        receivePathToPeek: receivePathToPeek
+    };
 
-}
+
+};

@@ -1,15 +1,13 @@
+'use strict';
+
 var express = require('express'),
-    http = require('http');
-
-// controller
-var controller = require("./server/controllers/modes/index.js");
-
-var app = express();
-var server = http.createServer(app);
-var io = require('socket.io').listen(server);
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
-var config = require('./server/config/config') [env];
+    http = require('http'),
+    controller = require("./server/controllers/modes/index.js"),
+    app = express(),
+    server = http.createServer(app),
+    io = require('socket.io').listen(server),
+    env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
+    config = require('./server/config/config') [env];
 
 require('./server/config/express')(app, config);
 

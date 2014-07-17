@@ -1,7 +1,10 @@
-var mongoose = require('mongoose'),
-    crypto = require('crypto');
+'use strict';
 
-var adminSchema = mongoose.Schema({
+var mongoose = require('mongoose'),
+    crypto = require('crypto'),
+    adminSchema;
+
+adminSchema = mongoose.Schema({
     username: String,
     salt: String,
     hashed_pwd: String

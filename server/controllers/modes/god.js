@@ -1,3 +1,5 @@
+'use strict';
+
 var exec = require('child_process').exec;
 
 exports.init = function (socket) {
@@ -17,9 +19,8 @@ exports.init = function (socket) {
         });
     };
 
-    (function () {
-        //Receive requests from the web
-        receiveCommand();
-    }());
+    return {
+        receiveCommand: receiveCommand
+    };
 
 };

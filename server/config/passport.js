@@ -1,3 +1,5 @@
+'use strict';
+
 require('../models/admin');
 
 var passport = require('passport'),

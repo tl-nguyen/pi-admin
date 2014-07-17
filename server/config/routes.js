@@ -1,3 +1,5 @@
+'use strict';
+
 var middlewares = require('./middlewares'),
     adminController = require('../controllers/adminController');
 

@@ -1,6 +1,9 @@
-var mongoose = require('mongoose');
+'use strict';
 
-var Admin = mongoose.model('Admin');
+var mongoose = require('mongoose'),
+    Admin;
+
+Admin = mongoose.model('Admin');
 
 exports.requiresLogin = function (req, res, next) {
     if (!req.isAuthenticated()) {
@@ -17,7 +20,7 @@ exports.requiresSignUp = function (req, res, next) {
             next();
         }
     });
-}
+};
 
 exports.existsAlready = function (req, res, next) {
     Admin.find({}).exec(function (err, collection) {
@@ -27,4 +30,4 @@ exports.existsAlready = function (req, res, next) {
             res.send(401);
         }
     });
-}
+};

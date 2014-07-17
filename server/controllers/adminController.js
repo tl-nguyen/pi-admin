@@ -1,7 +1,10 @@
-var mongoose = require('mongoose'),
-    passport = require('passport');
+'use strict';
 
-var Admin = mongoose.model('Admin');
+var mongoose = require('mongoose'),
+    passport = require('passport'),
+    Admin;
+
+Admin = mongoose.model('Admin');
 
 exports.signUp = function (req, res, next) {
     Admin.find({}).exec(function (err, collection) {

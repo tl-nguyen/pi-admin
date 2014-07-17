@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express'),
     swig = require('swig'),
     passport = require('passport');
