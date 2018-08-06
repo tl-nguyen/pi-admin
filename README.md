@@ -17,4 +17,4 @@ Admin panel on the web for Raspberry Pi
 - You will find those lines at *config.js* file `db: 'mongodb://your-database-address'`, enter modify it to your database address
 - To run PI-Admin, enter `node server.js` in the console
 
-*Please visit <a href="http://tlnguyen.com/raspberry-pi-admin-panel">Project Tutorial</a> for more details*
+*Please visit <a href="http://www.tlnguyen.com/2014/03/28/raspberry-pi-admin-panel/">Project Tutorial</a> for more details*
